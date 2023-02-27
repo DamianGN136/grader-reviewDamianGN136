@@ -22,7 +22,6 @@ class ExecHelpers {
       int c = out.read();
       if(c == -1) { break; }
       result += (char)c;
-      System.out.println(System.currentTimeMillis() + "; just read: " + (char)c);
     }
     return result;
   }
@@ -37,8 +36,8 @@ class ExecHelpers {
                     .command(Arrays.asList(cmd))
                     .redirectErrorStream(true)
                     .start();
-    InputStream out = p.getInputStream();
-    return String.format("%s\n", streamToString(out));
+    InputStream outputOfBash = p.getInputStream();
+    return String.format("%s\n", streamToString(outputOfBash));
   }
 
 }
@@ -48,7 +47,9 @@ class Handler implements URLHandler {
        if (url.getPath().equals("/grade")) {
            String[] parameters = url.getQuery().split("=");
            if (parameters[0].equals("repo")) {
-               return ExecHelpers.exec(new String[]{"bash", "grade.sh", parameters[1]});
+               String[] cmd = {"bash", "grade.sh", parameters[1]};
+               String result = ExecHelpers.exec(cmd);
+               return result;
            }
            else {
                return "Couldn't find query parameter repo";
@@ -73,3 +74,15 @@ class GradeServer {
     }
 }
 
+class ExecExamples {
+  public static void main(String[] args) throws IOException {
+    String[] cmd1 = {"ls", "lib"};
+    System.out.println(ExecHelpers.exec(cmd1));
+
+    String[] cmd2 = {"pwd"};
+    System.out.println(ExecHelpers.exec(cmd2));
+
+    String[] cmd3 = {"touch", "a-new-file.txt"};
+    System.out.println(ExecHelpers.exec(cmd3));
+  }
+}
