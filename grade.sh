@@ -8,9 +8,6 @@ mkdir grading-area
 git clone $1 student-submission
 echo 'Finished cloning'
 
-cp student-submission/ListExamples.java ./grading-area
-cp TestListExamples.java ./grading-area
-cp -r lib grading-area
 
 # Draw a picture/take notes on the directory structure that's set up after
 # getting to this point
