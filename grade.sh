@@ -19,19 +19,21 @@ if [[ -f student-submission/ListExamples.java ]]
 then 
     echo 'File Found'
 else 
-    echo 'Incorrect File'
+    echo 'Incorrect File, Grade: 0'
     exit 1
 fi
 
 cp student-submission/ListExamples.java grading-area
 cp TestListExamples.java grading-area
+cp -r lib grading-area
 
-cd grading-area/student-submission
+cd grading-area
 
-javac *.java
+javac -cp ".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar" *.java
+java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar" org.junit.runner.JUnitCore TestListExamples.java
 
 
-
+if[[]]
 
 
 
